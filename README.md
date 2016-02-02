@@ -1,2 +1,2 @@
-# go-srv-wrapper
-A lib for 
+# go-spfc
+A lib for wrapping services in Linux (service) and MacOS (launchctl)
