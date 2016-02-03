@@ -13,5 +13,6 @@ func TestPrintStatus(t *testing.T) {
 	if err != nil {
 		t.Error(err.Error())
 	}
-	t.Logf("sr %t %d", sr.Running, sr.PID)
+	assert.True(t, sr.Running)
+	assert.NotEqual(t, 0, sr.PID)
 }

@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -18,7 +17,6 @@ func status(s string) (StatusResponse, error) {
 		lines := strings.Split(string(out), "\n")
 		for _, line := range lines {
 			line = strings.Trim(line, "\t")
-			fmt.Println(line)
 			if strings.HasPrefix(line, "\"PID\"") {
 				sr.Running = true
 				sr.PID, _ = strconv.Atoi(line[8 : len(line)-1])
