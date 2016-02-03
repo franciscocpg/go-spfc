@@ -1,0 +1,4 @@
+package: github.com/franciscocpg/go-spfc
+version: 1.0.0
+import:
+  - package: github.com/stretchr/testify

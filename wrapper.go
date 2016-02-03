@@ -1,4 +1,4 @@
-// Package service provides Start, Status and Stop funcions
+// Package service provides Start, Status and Stop functions
 package service
 
 type StatusResponse struct {
