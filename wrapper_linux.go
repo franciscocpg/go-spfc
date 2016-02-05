@@ -7,11 +7,6 @@ import (
 	"strings"
 )
 
-func start(s string) (StatusResponse, error) {
-	execService("start", s)
-	return status(s)
-}
-
 func status(s string) (StatusResponse, error) {
 	var sr StatusResponse
 	out, err := exec.Command("sudo", "service", s, "status").CombinedOutput()
@@ -33,11 +28,6 @@ func status(s string) (StatusResponse, error) {
 	return sr, err
 }
 
-func stop(s string) (StatusResponse, error) {
-	execService("stop", s)
-	return status(s)
-}
-
-func execService(cmd string, s string) string {
+func callService(cmd string, s string) (string, error) {
 	return execCmd("sudo", "service", s, cmd)
 }

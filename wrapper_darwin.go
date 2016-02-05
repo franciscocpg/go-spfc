@@ -26,3 +26,7 @@ func status(s string) (StatusResponse, error) {
 	}
 	return sr, err
 }
+
+func callService(cmd string, s string) (string, error) {
+	return execCmd("launchctl", cmd, s)
+}

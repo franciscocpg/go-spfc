@@ -1,7 +1,10 @@
 // Package service provides Start, Status and Stop functions
 package service
 
-import "os/exec"
+import (
+	"errors"
+	"os/exec"
+)
 
 type StatusResponse struct {
 	Running bool
@@ -10,7 +13,7 @@ type StatusResponse struct {
 
 // Start starts service s
 func Start(s string) (StatusResponse, error) {
-	return start(s)
+	return execService("start", s)
 }
 
 // Status show the status for a given service name (s)
@@ -20,13 +23,20 @@ func Status(s string) (StatusResponse, error) {
 
 // Stop stops service s
 func Stop(s string) (StatusResponse, error) {
-	return start(s)
+	return execService("stop", s)
 }
 
-func execCmd(cmd string, arg ...string) string {
-	out, err := exec.Command(cmd, arg...).CombinedOutput()
+func execService(cmd string, s string) (StatusResponse, error) {
+	out, err := callService(cmd, s)
+	var sr StatusResponse
 	if err != nil {
-		panic(string(out))
+		return sr, errors.New(out)
+	} else {
+		return status(s)
 	}
-	return string(out)
+}
+
+func execCmd(cmd string, arg ...string) (string, error) {
+	out, err := exec.Command(cmd, arg...).CombinedOutput()
+	return string(out), err
 }

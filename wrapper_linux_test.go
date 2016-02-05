@@ -8,10 +8,10 @@ func createService() {
 	fmt.Println(fileName)
 	cmd := fmt.Sprintf("echo \"script\n  while : ; do sleep 1 ; done\nend script\" > %s", fileName)
 	execCmd("sudo", "sh", "-c", cmd)
-	start(servNameTest)
+	Start(servNameTest)
 }
 
 func removeService() {
-	stop(servNameTest)
+	Stop(servNameTest)
 	execCmd("sudo", "rm", fileName)
 }

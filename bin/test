@@ -1,2 +1,2 @@
 clear
-go test
+go test -v
