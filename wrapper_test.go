@@ -12,14 +12,16 @@ func init() {
 	createService()
 }
 
-func TestStatus(t *testing.T) {
-	defer removeService()
+func TestWhenGetStatusForASeviceThatDoesNotExist_ShouldGiveAnError(t *testing.T) {
 	sr, err := Status("someservicethatnotexists")
 	assert.NotNil(t, err, "Should give an error")
 	assert.False(t, sr.Running)
 	assert.Equal(t, 0, sr.PID)
+}
 
-	sr, err = Status(servNameTest)
+func TestWhenGetStatusForASeviceThatDoesExist_ShoudWorkFine(t *testing.T) {
+	defer removeService()
+	sr, err := Status(servNameTest)
 	if err != nil {
 		panic(err.Error())
 	}
