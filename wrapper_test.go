@@ -13,7 +13,7 @@ func init() {
 }
 
 func TestWhenGetStatusForAServiceThatDoesNotExist_ShouldGiveAnError(t *testing.T) {
-	sr, err := Status("someservicethatnotexists")
+	sr, err := GetStatus("someservicethatnotexists")
 	assert.NotNil(t, err, "Should give an error")
 	assert.False(t, sr.Running)
 	assert.Equal(t, 0, sr.PID)
@@ -21,7 +21,7 @@ func TestWhenGetStatusForAServiceThatDoesNotExist_ShouldGiveAnError(t *testing.T
 
 func TestWhenGetStatusForAServiceThatDoesExist_ShoudWorkFine(t *testing.T) {
 	defer removeService()
-	sr, err := Status(servNameTest)
+	sr, err := GetStatus(servNameTest)
 	if err != nil {
 		panic(err.Error())
 	}

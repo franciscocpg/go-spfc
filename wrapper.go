@@ -6,34 +6,34 @@ import (
 	"os/exec"
 )
 
-type StatusResponse struct {
+// Status represents a service status
+type Status struct {
 	Running bool
 	PID     int
 }
 
 // Start starts service s
-func Start(s string) (StatusResponse, error) {
+func Start(s string) (Status, error) {
 	return execService("start", s)
 }
 
-// Status show the status for a given service name (s)
-func Status(s string) (StatusResponse, error) {
+// GetStatus show the status for a given service name (s)
+func GetStatus(s string) (Status, error) {
 	return status(s)
 }
 
 // Stop stops service s
-func Stop(s string) (StatusResponse, error) {
+func Stop(s string) (Status, error) {
 	return execService("stop", s)
 }
 
-func execService(cmd string, s string) (StatusResponse, error) {
+func execService(cmd string, s string) (Status, error) {
 	out, err := callService(cmd, s)
-	var sr StatusResponse
+	var sr Status
 	if err != nil {
 		return sr, errors.New(out)
-	} else {
-		return status(s)
 	}
+	return status(s)
 }
 
 func execCmd(cmd string, arg ...string) (string, error) {
