@@ -6,34 +6,41 @@ import (
 	"os/exec"
 )
 
-// Status represents a service status
-type Status struct {
-	Running bool
-	PID     int
-}
+type (
+	// Execution represents a service instance for execution operation
+	Execution struct {
+		sudo bool
+		ServiceName string
+	}
+	// Status represents a service status
+	Status struct {
+		Running bool
+		PID     int
+	}
+)
 
 // Start starts service s
-func Start(s string) (Status, error) {
-	return execService("start", s)
+func (e *Execution) Start() (Status, error) {
+	return e.execService("start")
 }
 
 // GetStatus show the status for a given service name (s)
-func GetStatus(s string) (Status, error) {
-	return status(s)
+func (e *Execution) GetStatus() (Status, error) {
+	return e.status()
 }
 
 // Stop stops service s
-func Stop(s string) (Status, error) {
-	return execService("stop", s)
+func (e *Execution) Stop() (Status, error) {
+	return e.execService("stop")
 }
 
-func execService(cmd string, s string) (Status, error) {
-	out, err := callService(cmd, s)
+func (e *Execution) execService(cmd string) (Status, error) {
+	out, err := e.callService(cmd)
 	var sr Status
 	if err != nil {
 		return sr, errors.New(out)
 	}
-	return status(s)
+	return e.status()
 }
 
 func execCmd(cmd string, arg ...string) (string, error) {

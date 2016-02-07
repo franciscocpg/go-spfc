@@ -8,19 +8,24 @@ import (
 
 const servNameTest = "go-spfc-test"
 
+var (
+	someServiceThatNotExists = &Execution{true, "someservicethatnotexists"}
+	someServiceThatExists = &Execution{true, servNameTest}
+)
+
 func init() {
 	createService()
 }
 
 func TestWhenStartAServiceThatDoesNotExist_ShouldGiveAnError(t *testing.T) {
-	sr, err := Start("someservicethatnotexists")
+	ss, err := someServiceThatNotExists.Start()
 	assert.NotNil(t, err, "Should give an error")
-	assert.False(t, sr.Running)
-	assert.Equal(t, 0, sr.PID)
+	assert.False(t, ss.Running)
+	assert.Equal(t, 0, ss.PID)
 }
 
 func TestWhenStartAServiceThatDoesExist_ShoudWorkFine(t *testing.T) {
-	sr, err := Start(servNameTest)
+	sr, err := someServiceThatExists.Start()
 	if err != nil {
 		panic(err.Error())
 	}
@@ -29,14 +34,14 @@ func TestWhenStartAServiceThatDoesExist_ShoudWorkFine(t *testing.T) {
 }
 
 func TestWhenGetStatusForAServiceThatDoesNotExist_ShouldGiveAnError(t *testing.T) {
-	sr, err := GetStatus("someservicethatnotexists")
+	sr, err := someServiceThatNotExists.GetStatus()
 	assert.NotNil(t, err, "Should give an error")
 	assert.False(t, sr.Running)
 	assert.Equal(t, 0, sr.PID)
 }
 
 func TestWhenGetStatusForAServiceThatDoesExist_ShoudWorkFine(t *testing.T) {
-	sr, err := GetStatus(servNameTest)
+	sr, err := someServiceThatExists.GetStatus()
 	if err != nil {
 		panic(err.Error())
 	}
@@ -45,7 +50,7 @@ func TestWhenGetStatusForAServiceThatDoesExist_ShoudWorkFine(t *testing.T) {
 }
 
 func TestWhenStopAServiceThatDoesNotExist_ShouldGiveAnError(t *testing.T) {
-	sr, err := Stop("someservicethatnotexists")
+	sr, err := someServiceThatNotExists.Stop()
 	assert.NotNil(t, err, "Should give an error")
 	assert.False(t, sr.Running)
 	assert.Equal(t, 0, sr.PID)
@@ -53,10 +58,10 @@ func TestWhenStopAServiceThatDoesNotExist_ShouldGiveAnError(t *testing.T) {
 
 func TestWhenStopAServiceThatDoesExist_ShoudWorkFine(t *testing.T) {
 	defer removeService()
-	sr, _ := GetStatus(servNameTest)
+	sr, _ := someServiceThatExists.GetStatus()
 	assert.True(t, sr.Running)
 	assert.NotEqual(t, 0, sr.PID)
-	sr, err := Stop(servNameTest)
+	sr, err := someServiceThatExists.Stop()
 	if err != nil {
 		panic(err.Error())
 	}

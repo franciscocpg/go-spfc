@@ -7,9 +7,9 @@ import (
 	"strings"
 )
 
-func status(s string) (Status, error) {
+func (e *Execution) status() (Status, error) {
 	var st Status
-	out, err := exec.Command("sudo", "service", s, "status").CombinedOutput()
+	out, err := exec.Command("sudo", "service", e.ServiceName, "status").CombinedOutput()
 	if err != nil {
 		err = errors.New(string(out))
 	} else {
@@ -28,6 +28,9 @@ func status(s string) (Status, error) {
 	return st, err
 }
 
-func callService(cmd string, s string) (string, error) {
-	return execCmd("sudo", "service", s, cmd)
+func (e *Execution) callService(cmd string) (string, error) {
+	if e.sudo {
+		return execCmd("sudo", "service", e.ServiceName, cmd)
+	}
+	return execCmd("service",e.ServiceName, cmd)
 }
