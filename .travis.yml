@@ -12,4 +12,4 @@ matrix:
       env: GO15VENDOREXPERIMENT=1
 install:
   - ./.travis/install.sh
-script: bin/build-test
+script: .travis/build.sh
