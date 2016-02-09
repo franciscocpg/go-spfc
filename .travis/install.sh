@@ -2,9 +2,9 @@
 if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
 	export GOPATH="$HOME/go"
 	brew unlink go
-	brew update
+	brew update > /dev/null
     brew install go
-    mkdir -p "$GO_PATH/src/github.com"
+    mkdir -p "$GOPATH/src/github.com"
     cp -R ../../franciscocpg "$GOPATH"
     cd "$GOPATH/src/github.com/franciscocpg/go-spfc"
     brew install glide
