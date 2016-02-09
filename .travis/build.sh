@@ -1,4 +1,4 @@
-#!/bin/basht
+#!/bin/bash
 set -e
 if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
 	. ./.travis/mac-env
