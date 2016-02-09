@@ -8,9 +8,9 @@ import (
 )
 
 // Status show the status for a given service name(s)
-func status(s string) (StatusResponse, error) {
-	out, err := exec.Command("launchctl", "list", s).CombinedOutput()
-	var sr StatusResponse
+func (e *Execution) status() (Status, error) {
+	out, err := exec.Command("launchctl", "list", e.ServiceName).CombinedOutput()
+	var ss Status
 	if err != nil {
 		err = errors.New(string(out))
 	} else {
@@ -18,15 +18,19 @@ func status(s string) (StatusResponse, error) {
 		for _, line := range lines {
 			line = strings.Trim(line, "\t")
 			if strings.HasPrefix(line, "\"PID\"") {
-				sr.Running = true
-				sr.PID, _ = strconv.Atoi(line[8 : len(line)-1])
+				ss.Running = true
+				ss.PID, _ = strconv.Atoi(line[8 : len(line)-1])
 				break
 			}
 		}
 	}
-	return sr, err
+	return ss, err
 }
 
-func callService(cmd string, s string) (string, error) {
-	return execCmd("launchctl", cmd, s)
+func (e *Execution) callService(cmd string) (string, error) {
+	return execCmd("launchctl", cmd, e.ServiceName)
+}
+
+func sudoDefault() bool {
+	return false
 }

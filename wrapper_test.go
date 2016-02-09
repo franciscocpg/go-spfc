@@ -10,7 +10,7 @@ const servNameTest = "go-spfc-test"
 
 var (
 	someServiceThatNotExists = &Execution{true, "someservicethatnotexists"}
-	someServiceThatExists = &Execution{true, servNameTest}
+	someServiceThatExists    = &Execution{true, servNameTest}
 )
 
 func init() {

@@ -9,7 +9,7 @@ import (
 type (
 	// Execution represents a service instance for execution operation
 	Execution struct {
-		sudo bool
+		sudo        bool
 		ServiceName string
 	}
 	// Status represents a service status
@@ -18,6 +18,12 @@ type (
 		PID     int
 	}
 )
+
+// NewExecution constructs a execution with a given name.
+// In linux with sudo true and Mac sudo false
+func NewExecution(serviceName string) *Execution {
+	return &Execution{sudoDefault(), serviceName}
+}
 
 // Start starts service s
 func (e *Execution) Start() (Status, error) {
