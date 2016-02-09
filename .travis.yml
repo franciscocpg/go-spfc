@@ -6,6 +6,7 @@ matrix:
       dist: trusty
       sudo: required
       env: GO15VENDOREXPERIMENT=1
+      go: 1.5.3
     - os: osx
       language: generic
       env: GO15VENDOREXPERIMENT=1
