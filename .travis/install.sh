@@ -1,7 +1,7 @@
 #!/bin/bash
 if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
 	brew unlink go
-	brew upgrade
+	brew update
     brew install go
     brew install glide
     go env
