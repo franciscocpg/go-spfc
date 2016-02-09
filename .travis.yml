@@ -1,0 +1,14 @@
+language: go
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: GO15VENDOREXPERIMENT=1
+    - os: osx
+      language: generic
+      env: GO15VENDOREXPERIMENT=1
+install:
+  - ./.travis/install.sh
+script: bin/build-test
