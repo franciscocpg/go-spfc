@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
 	. ./.travis/mac-env
 	brew unlink go
@@ -13,4 +14,5 @@ else
 	# Install glide
     bash <(curl -s https://gist.githubusercontent.com/franciscocpg/ab10b57898978009638f/raw/)
 fi
+go get -u github.com/golang/lint/golint
 glide up
