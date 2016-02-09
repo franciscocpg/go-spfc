@@ -1,6 +1,6 @@
 #!/bin/bash
 if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
-	. ./travis/mac-env
+	. ./.travis/mac-env
 	brew unlink go
 	brew update > /dev/null
     brew install go
