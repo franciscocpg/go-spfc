@@ -12,19 +12,21 @@ type (
 
 	// Execution represents a service instance for execution operation
 	Execution struct {
-		sudo        bool
+		Sudo        bool
 		ServiceName string
 	}
 	// Status represents a service status
 	Status struct {
 		Running bool
 		PID     int
+		Control Control
 	}
 )
 
 const (
+	none Control = 1 + iota
 	// LaunchCtl - Mac OS implementation (https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/launchctl.1.html)
-	LaunchCtl Control = 1 + iota
+	LaunchCtl
 	// Upstart implementation (http://upstart.ubuntu.com/)
 	Upstart
 	// SystemD implementation (https://fedoraproject.org/wiki/Systemd)

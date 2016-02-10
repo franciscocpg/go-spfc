@@ -11,18 +11,19 @@ func (e *Execution) status() (Status, error) {
 	var st Status
 	var out []byte
 	var err error
-	if e.sudo {
+	if e.Sudo {
 		out, err = exec.Command("sudo", "service", e.ServiceName, "status").CombinedOutput()
 	} else {
 		out, err = exec.Command("service", e.ServiceName, "status").CombinedOutput()
 	}
-	if err != nil {
-		err = errors.New(string(out))
-	} else {
-		sOut := string(out)
-		lines := strings.Split(sOut, "\n")
-		// Upstart
-		if len(lines) == 2 {
+
+	sOut := string(out)
+	lines := strings.Split(sOut, "\n")
+	// Upstart
+	if len(lines) == 2 {
+		if err != nil {
+			err = errors.New(string(out))
+		} else {
 			words := strings.Split(string(out), " ")
 			if len(words) == 4 {
 				if strings.HasPrefix(words[1], "start/running") {
@@ -34,29 +35,31 @@ func (e *Execution) status() (Status, error) {
 					}
 				}
 			}
-		} else if strings.HasPrefix(strings.Trim(lines[1], " "), "Loaded") {
-			// SystemV
-			for _, line := range lines {
-				line = strings.Trim(line, " ")
-				if strings.HasPrefix(line, "Active") {
-					st.Running = strings.Contains(line, "active (running)")
-					if !st.Running {
-						break
-					}
-				} else if strings.HasPrefix(line, "Main PID") {
-					pid := line[10:len(line)]
-					idx := strings.Index(pid, " ")
-					pid = pid[0 : idx-1]
-					st.PID, _ = strconv.Atoi(pid)
+			st.Control = Upstart
+		}
+	} else if strings.HasPrefix(strings.Trim(lines[1], " "), "Loaded") {
+		// SystemV
+		for _, line := range lines {
+			line = strings.Trim(line, " ")
+			if strings.HasPrefix(line, "Active") {
+				st.Running = strings.Contains(line, "active (running)")
+				if !st.Running {
+					break
 				}
+			} else if strings.HasPrefix(line, "Main PID") {
+				pid := line[10:len(line)]
+				idx := strings.Index(pid, " ")
+				pid = pid[0 : idx-1]
+				st.PID, _ = strconv.Atoi(pid)
 			}
 		}
+		st.Control = SystemD
 	}
 	return st, err
 }
 
 func (e *Execution) callService(cmd string) (string, error) {
-	if e.sudo {
+	if e.Sudo {
 		return execCmd("sudo", "service", e.ServiceName, cmd)
 	}
 	return execCmd("service", e.ServiceName, cmd)
