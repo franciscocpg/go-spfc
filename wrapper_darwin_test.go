@@ -35,7 +35,7 @@ func createService() {
 	servNameTestPList := strings.Join(s, "")
 	f, err := os.Create(servNameTestPList)
 	w := bufio.NewWriter(f)
-	_, err = w.WriteString(go_spfc_test_plist)
+	_, err = w.WriteString(goSpfcTestPlist)
 	w.Flush()
 	check(err)
 	execLaunchctl("load", servNameTestPList)
