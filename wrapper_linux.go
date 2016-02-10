@@ -19,14 +19,29 @@ func (e *Execution) status() (Status, error) {
 	if err != nil {
 		err = errors.New(string(out))
 	} else {
-		lines := strings.Split(string(out), " ")
-		if len(lines) == 4 {
-			if strings.HasPrefix(lines[1], "start/running") {
-				st.Running = true
-				pid := lines[3][0 : len(lines[3])-1]
-				st.PID, err = strconv.Atoi(pid)
-				if err != nil {
-					panic(err)
+		sOut := string(out)
+		lines := strings.Split(sOut, "\n")
+		// Upstart
+		if len(lines) == 1 {
+			words := strings.Split(string(out), " ")
+			if len(words) == 4 {
+				if strings.HasPrefix(words[1], "start/running") {
+					st.Running = true
+					pid := words[3][0 : len(words[3])-1]
+					st.PID, err = strconv.Atoi(pid)
+					if err != nil {
+						panic(err)
+					}
+				}
+			}
+		} else if strings.HasPrefix(strings.Trim(lines[1], " "), "Loaded") {
+			// SystemV
+			for _, line := range lines {
+				line = strings.Trim(line, " ")
+				if strings.HasPrefix(line, "Active") {
+					st.Running = strings.Contains(line, "active (running)")
+				} else if strings.HasPrefix(line, "Main PID") {
+					// Parse MAIN PID
 				}
 			}
 		}
