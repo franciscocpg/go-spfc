@@ -7,6 +7,9 @@ import (
 )
 
 type (
+	// Control represents the service control types implemented
+	Control int
+
 	// Execution represents a service instance for execution operation
 	Execution struct {
 		sudo        bool
@@ -17,6 +20,15 @@ type (
 		Running bool
 		PID     int
 	}
+)
+
+const (
+	// LaunchCtl - Mac OS implementation (https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/launchctl.1.html)
+	LaunchCtl Control = 1 + iota
+	// Upstart implementation (http://upstart.ubuntu.com/)
+	Upstart
+	// SystemD implementation (https://fedoraproject.org/wiki/Systemd)
+	SystemD
 )
 
 // NewExecution constructs a execution with a given name.

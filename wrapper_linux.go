@@ -22,7 +22,7 @@ func (e *Execution) status() (Status, error) {
 		sOut := string(out)
 		lines := strings.Split(sOut, "\n")
 		// Upstart
-		if len(lines) == 1 {
+		if len(lines) == 2 {
 			words := strings.Split(string(out), " ")
 			if len(words) == 4 {
 				if strings.HasPrefix(words[1], "start/running") {
@@ -40,8 +40,14 @@ func (e *Execution) status() (Status, error) {
 				line = strings.Trim(line, " ")
 				if strings.HasPrefix(line, "Active") {
 					st.Running = strings.Contains(line, "active (running)")
+					if !st.Running {
+						break
+					}
 				} else if strings.HasPrefix(line, "Main PID") {
-					// Parse MAIN PID
+					pid := line[10:len(line)]
+					idx := strings.Index(pid, " ")
+					pid = pid[0 : idx-1]
+					st.PID, _ = strconv.Atoi(pid)
 				}
 			}
 		}
