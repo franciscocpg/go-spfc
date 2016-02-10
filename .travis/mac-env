@@ -1,3 +1,4 @@
 export GOPATH="$HOME/go"
 GITHUB="$GOPATH/src/github.com"
 PROJECT="$GITHUB/franciscocpg/go-spfc"
+export PATH=${PATH}:$GOPATH/bin
