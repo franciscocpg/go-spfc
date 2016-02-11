@@ -38,7 +38,17 @@ func (e *Execution) status() (Status, error) {
 			st.Control = Upstart
 		}
 	} else if strings.HasPrefix(strings.Trim(lines[1], " "), "Loaded") {
-		// SystemV
+		// systemd
+		if err != nil {
+			errString := err.Error()
+			idx := strings.LastIndex(errString, " ")
+			exitCode, _ := strconv.Atoi(errString[idx+1 : len(errString)])
+			// SystemD status is 3 when service is stopped
+			if exitCode != 3 {
+				return st, err
+			}
+			err = nil
+		}
 		for _, line := range lines {
 			line = strings.Trim(line, " ")
 			if strings.HasPrefix(line, "Active") {

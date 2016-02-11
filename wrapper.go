@@ -29,7 +29,7 @@ const (
 	LaunchCtl
 	// Upstart implementation (http://upstart.ubuntu.com/)
 	Upstart
-	// SystemD implementation (https://fedoraproject.org/wiki/Systemd)
+	// systemd implementation (https://fedoraproject.org/wiki/Systemd, https://github.com/systemd/systemd)
 	SystemD
 )
 
