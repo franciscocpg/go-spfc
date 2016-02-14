@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+func initControlType() {
+	controlType = LaunchCtl
+}
+
 // Status show the status for a given service name(s)
 func (e *Execution) status() (Status, error) {
 	out, err := exec.Command("launchctl", "list", e.ServiceName).CombinedOutput()

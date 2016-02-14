@@ -4,11 +4,25 @@ package service
 import (
 	"errors"
 	"os/exec"
+	_ "fmt"
+)
+
+var (
+	srvControl  control
+	controlType ControlType
 )
 
 type (
-	// Control represents the service control types implemented
-	Control int
+	// ControlType represents the service control type
+	ControlType int
+
+	// Control is a interface that represents services control (launchctl, initctl, systemctl, etc)
+	control interface {
+		startCmd(sName string) []string
+		stopCmd(sName string) []string
+		statusCmd(sName string) []string
+		parseStatus(sData string, err error) (Status, error)
+	}
 
 	// Execution represents a service instance for execution operation
 	Execution struct {
@@ -19,12 +33,11 @@ type (
 	Status struct {
 		Running bool
 		PID     int
-		Control Control
 	}
 )
 
 const (
-	none Control = 1 + iota
+	none ControlType = 1 + iota
 	// LaunchCtl - Mac OS implementation (https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/launchctl.1.html)
 	LaunchCtl
 	// Upstart implementation (http://upstart.ubuntu.com/)
@@ -33,34 +46,46 @@ const (
 	SystemD
 )
 
+func init() {
+	controlType, srvControl = getControlType()
+}
+
 // NewExecution constructs a execution with a given name.
 // In linux with sudo true and Mac sudo false
 func NewExecution(serviceName string) *Execution {
 	return &Execution{sudoDefault(), serviceName}
 }
 
-// Start starts service s
+// Start starts service
 func (e *Execution) Start() (Status, error) {
-	return e.execService("start")
+	return e.execService(srvControl.startCmd(e.ServiceName))
 }
 
-// GetStatus show the status for a given service name (s)
+// GetStatus show the status for a given service name
 func (e *Execution) GetStatus() (Status, error) {
-	return e.status()
+	out, err := e.execServiceCmd(srvControl.statusCmd(e.ServiceName))
+	return srvControl.parseStatus(out, err)
 }
 
-// Stop stops service s
+// Stop stops service
 func (e *Execution) Stop() (Status, error) {
-	return e.execService("stop")
+	return e.execService(srvControl.stopCmd(e.ServiceName))
 }
 
-func (e *Execution) execService(cmd string) (Status, error) {
-	out, err := e.callService(cmd)
-	var sr Status
+func (e *Execution) execService(cmdArr []string) (Status, error) {
+	out, err := e.execServiceCmd(cmdArr)
 	if err != nil {
-		return sr, errors.New(out)
+		return Status{}, errors.New(out)
 	}
-	return e.status()
+	return e.GetStatus()
+}
+
+func (e *Execution) execServiceCmd(cmdArr []string) (string, error) {
+	if e.Sudo {
+		return execCmd("sudo", cmdArr...)
+	} else {
+		return execCmd(cmdArr[0], cmdArr[1:len(cmdArr)-1]...)
+	}
 }
 
 func execCmd(cmd string, arg ...string) (string, error) {
