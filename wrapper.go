@@ -4,7 +4,6 @@ package service
 import (
 	"errors"
 	"os/exec"
-	_ "fmt"
 )
 
 var (

@@ -43,5 +43,5 @@ func (s initctl) parseStatus(sData string, err error) (Status, error) {
 			}
 		}
 	}
-	return st, nil
+	return st, err
 }
