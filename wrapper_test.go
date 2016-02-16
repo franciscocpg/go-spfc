@@ -9,8 +9,8 @@ import (
 const servNameTest = "go-spfc-test"
 
 var (
-	someServiceThatNotExists = &Execution{true, "someservicethatnotexists"}
-	someServiceThatExists    = &Execution{true, servNameTest}
+	someServiceThatNotExists = NewExecution("someservicethatnotexists")
+	someServiceThatExists    = NewExecution(servNameTest)
 )
 
 func init() {

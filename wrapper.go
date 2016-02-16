@@ -83,7 +83,7 @@ func (e *Execution) execServiceCmd(cmdArr []string) (string, error) {
 	if e.Sudo {
 		return execCmd("sudo", cmdArr...)
 	} else {
-		return execCmd(cmdArr[0], cmdArr[1:len(cmdArr)-1]...)
+		return execCmd(cmdArr[0], cmdArr[1:len(cmdArr)]...)
 	}
 }
 
