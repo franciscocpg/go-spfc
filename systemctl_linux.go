@@ -32,13 +32,12 @@ func (s systemctl) parseStatus(sData string, err error) (Status, error) {
 		// SystemD status is 3 when service is stopped or does not exists
 		if exitCode != 3 {
 			return st, err
-		} else {
-			for _, line := range lines {
-				line = strings.Trim(line, " ")
-				// When services does not exists then "Loaded" contains "not-found"
-				if strings.HasPrefix(line, "Loaded") && strings.Contains(line, "not-found") {
-					return st, err
-				}
+		}
+		for _, line := range lines {
+			line = strings.Trim(line, " ")
+			// When services does not exists then "Loaded" contains "not-found"
+			if strings.HasPrefix(line, "Loaded") && strings.Contains(line, "not-found") {
+				return st, err
 			}
 		}
 	}
