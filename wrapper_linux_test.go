@@ -2,21 +2,29 @@ package service
 
 import "fmt"
 
-var fileName = fmt.Sprintf("/etc/init/%s.conf", servNameTest)
+var fileName string
 
-const goSpfcTestSystemd string = "[Unit] " +
-	"Description=go-spfc-test " +
-	" " +
-	"[Service] " +
-	"TimeoutStartSec=0 " +
-	"ExecStart=/bin/sh -c 'while true; do echo Hello World; sleep 1; done' " +
-	" " +
-	"[Install] " +
-	"WantedBy=multi-user.target "
+const goSpfcTestSystemd string = "\"[Unit]\n " +
+	"Description=go-spfc-test\n " +
+	"\n " +
+	"[Service]\n " +
+	"TimeoutStartSec=0\n " +
+	"ExecStart=/bin/sh -c 'while true; do sleep 1; done'\n " +
+	"\n " +
+	"[Install]\n " +
+	"WantedBy=multi-user.target\" "
 
 func createService() {
+	var text string
+	if controlType == SystemD {
+		fileName = fmt.Sprintf("/usr/lib/systemd/system/%s.service", servNameTest)
+		text = goSpfcTestSystemd
+	} else {
+		fileName = fmt.Sprintf("/etc/init/%s.conf", servNameTest)
+		text = "\"script\n  while : ; do sleep 1 ; done\nend script\""
+	}
 	fmt.Println(fileName)
-	cmd := fmt.Sprintf("echo \"script\n  while : ; do sleep 1 ; done\nend script\" > %s", fileName)
+	cmd := fmt.Sprintf("echo %s > %s", text, fileName)
 	execCmd("sudo", "sh", "-c", cmd)
 }
 

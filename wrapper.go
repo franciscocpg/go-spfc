@@ -15,7 +15,7 @@ type (
 	// ControlType represents the service control type
 	ControlType int
 
-	// Control is a interface that represents services control (launchctl, initctl, systemctl, etc)
+	// control is a interface that represents services control (launchctl, initctl, systemctl, etc)
 	control interface {
 		startCmd(sName string) []string
 		stopCmd(sName string) []string
