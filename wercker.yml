@@ -1,22 +1,31 @@
-box: wercker/default
+box: wercker-labs/docker
 build:
   steps:
-    # - minimum2scp/install-docker:
-    #     version: 1.10.2
     - script:
         name: docker version
         code: |
-          echo $USER
-          lsb_release -a
-          curl -sSL https://get.docker.com/ | sh
-          sudo usermod -aG docker ubuntu
+          sudo apt-get update && sudo apt-get upgrade docker
           docker -v
-          sudo service docker restart
-          sudo service docker status
-          sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
-          sudo docker exec systemd systemctl --version
-    # - script:
-    #     name: Up docker systemd and test systemctl
-    #     code: |
-    #       sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
-    #       sudo docker exec systemd systemctl --version
+
+# box: wercker/default
+# build:
+#   steps:
+#     # - minimum2scp/install-docker:
+#     #     version: 1.10.2
+#     - script:
+#         name: docker version
+#         code: |
+#           echo $USER
+#           lsb_release -a
+#           curl -sSL https://get.docker.com/ | sh
+#           sudo usermod -aG docker ubuntu
+#           docker -v
+#           sudo service docker restart
+#           sudo service docker status
+#           sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
+#           sudo docker exec systemd systemctl --version
+#     # - script:
+#     #     name: Up docker systemd and test systemctl
+#     #     code: |
+#     #       sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
+#     #       sudo docker exec systemd systemctl --version
