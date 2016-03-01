@@ -10,8 +10,10 @@ build:
           sudo usermod -aG docker ubuntu
           docker -v
           sudo service docker status
-    - script:
-        name: Up docker systemd and test systemctl
-        code: |
           sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
           sudo docker exec systemd systemctl --version
+    # - script:
+    #     name: Up docker systemd and test systemctl
+    #     code: |
+    #       sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
+    #       sudo docker exec systemd systemctl --version
