@@ -1,11 +1,12 @@
-box: jparyani/docker@1.0.1
+box: franciscocpg/ubuntu14.04@0.0.1
 build:
   steps:
     - script:
         name: docker version
         code: |
+          curl -sSL https://get.docker.com/ | sh
           docker -v
-          sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
+          docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
 
 # box: wercker/default
 # build:
