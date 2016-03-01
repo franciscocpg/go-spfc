@@ -9,6 +9,7 @@ build:
           curl -sSL https://get.docker.com/ | sh
           sudo usermod -aG docker ubuntu
           docker -v
+          sudo service docker status
     - script:
         name: Up docker systemd and test systemctl
         code: |
