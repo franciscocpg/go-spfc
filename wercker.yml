@@ -1,6 +1,8 @@
-box: wercker-labs/docker
+box: wercker/default
 build:
   steps:
+    - minimum2scp/install-docker
+        version: 1.10.2
     - script:
         name: docker version
         code: |
