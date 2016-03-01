@@ -2,6 +2,10 @@ language: go
 
 matrix:
   include:
+    - sudo: required
+      services:
+        - docker
+      env: DOCKER=true
     - os: linux
       dist: trusty
       sudo: required
