@@ -5,7 +5,7 @@ build:
         name: docker version
         code: |
           sudo apt-get update || true
-          sudo apt-get upgrade docker -y
+          sudo apt-get upgrade docker -y --force-yes
           docker -v
 
 # box: wercker/default
