@@ -1,11 +1,9 @@
-box: franciscocpg/ubuntu14.04@0.0.1
+box: wercker-labs/docker
 build:
   steps:
     - script:
         name: docker version
         code: |
-          curl -sSL https://get.docker.com/ | sh
-          sudo service docker restart
           docker -v
           sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
 
