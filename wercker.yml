@@ -4,10 +4,9 @@ build:
     - script:
         name: docker version
         code: |
-          sudo apt-get install linux-image-virtual linux-image-extra-virtual
           curl -sSL https://get.docker.com/ | sh
-          docker -v
           sudo service docker restart
+          docker -v
           sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
 
 # box: wercker/default
