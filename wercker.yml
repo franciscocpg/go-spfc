@@ -7,3 +7,8 @@ build:
         name: docker version
         code: |
           docker -v
+    - script:
+        name: Up docker systemd and test systemctl
+        code: |
+          docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
+          docker exec systemd systemctl --version
