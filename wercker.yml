@@ -4,9 +4,8 @@ build:
     - script:
         name: docker version
         code: |
-          sudo apt-get update || true
-          sudo apt-get upgrade docker -y --force-yes
           docker -v
+          sudo docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
 
 # box: wercker/default
 # build:
