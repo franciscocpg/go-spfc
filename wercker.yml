@@ -1,11 +1,12 @@
 box: wercker/default
 build:
   steps:
-    - minimum2scp/install-docker:
-        version: 1.10.2
+    # - minimum2scp/install-docker:
+    #     version: 1.10.2
     - script:
         name: docker version
         code: |
+          curl -sSL https://get.docker.com/ | sh
           docker -v
     - script:
         name: Up docker systemd and test systemctl
