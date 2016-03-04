@@ -1,6 +1,9 @@
 package service
 
 import (
+	"fmt"
+	"os"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,12 +12,22 @@ import (
 const servNameTest = "go-spfc-test"
 
 var (
-	someServiceThatNotExists = NewExecution("someservicethatnotexists")
-	someServiceThatExists    = NewExecution(servNameTest)
+	someServiceThatNotExists *Execution
+	someServiceThatExists    *Execution
+	sudo                     bool
 )
 
 func init() {
+	sudoEnv := os.Getenv("GO_SPFC_SUDO_TEST")
+	if len(sudoEnv) == 0 {
+		sudo = false
+	} else {
+		sudo, _ = strconv.ParseBool(sudoEnv)
+	}
+	fmt.Printf("As sudo? %t\n", sudo)
 	createService()
+	someServiceThatNotExists = &Execution{sudo, "someservicethatnotexists"}
+	someServiceThatExists = &Execution{sudo, servNameTest}
 }
 
 func TestWhenStartAServiceThatDoesNotExist_ShouldGiveAnError(t *testing.T) {

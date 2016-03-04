@@ -25,7 +25,12 @@ func createService() {
 	}
 	fmt.Println(fileName)
 	cmd := fmt.Sprintf("echo %s > %s", text, fileName)
-	_, err := execCmd("sudo", "sh", "-c", cmd)
+	var err error
+	if sudo {
+		_, err = execCmd("sudo", "sh", "-c", cmd)
+	} else {
+		_, err = execCmd("sh", "-c", cmd)
+	}
 	if err != nil {
 		panic(err)
 	}

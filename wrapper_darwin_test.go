@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"time"
 )
 
 const goSpfcTestPlist string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> " +
@@ -43,6 +44,8 @@ func createService() {
 
 func removeService() {
 	execLaunchctl("remove", servNameTest)
+	// Wait a little bit
+	time.Sleep(500 * time.Millisecond)
 }
 
 func execLaunchctl(arg ...string) {

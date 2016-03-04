@@ -13,9 +13,13 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
     echo $(pwd)
 else
     if [[ "$DOCKER" = "true" ]]; then
-        docker run -itd --name systemd -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run milcom/centos7-systemd
-        docker ps -a
-        docker exec systemd systemctl --version
+        PROJECT="/root/go/src/github.com/franciscocpg/go-spfc"
+        docker build -t go-systemd .
+        docker run -itd --name go-systemd-test -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp/$(mktemp -d):/run go-systemd
+        docker ps
+        docker exec go-systemd-test systemctl --version
+        docker exec go-systemd-test bash -l -c 'go get -u github.com/golang/lint/golint'
+        docker exec go-systemd-test bash -l -c 'cd '$PROJECT'; glide up'
     else
         # Install glide
         bash <(curl -s https://gist.githubusercontent.com/franciscocpg/ab10b57898978009638f/raw/)

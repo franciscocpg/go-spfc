@@ -9,7 +9,9 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      env: GO15VENDOREXPERIMENT=1
+      env: 
+        - GO15VENDOREXPERIMENT=1
+        - GO_SPFC_SUDO_TEST=true
       go: 1.5.3
     - os: osx
       language: generic
