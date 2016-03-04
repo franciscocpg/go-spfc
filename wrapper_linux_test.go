@@ -25,7 +25,10 @@ func createService() {
 	}
 	fmt.Println(fileName)
 	cmd := fmt.Sprintf("echo %s > %s", text, fileName)
-	execCmd("sudo", "sh", "-c", cmd)
+	_, err := execCmd("sudo", "sh", "-c", cmd)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func removeService() {
