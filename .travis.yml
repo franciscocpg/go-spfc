@@ -5,17 +5,22 @@ matrix:
     - sudo: required
       services:
         - docker
-      env: DOCKER=true
+      env:
+        - NAME=systemd 
+        - DOCKER=true
     - os: linux
       dist: trusty
       sudo: required
       env: 
+        - NAME=upstart
         - GO15VENDOREXPERIMENT=1
         - GO_SPFC_SUDO_TEST=true
       go: 1.5.3
     - os: osx
       language: generic
-      env: GO15VENDOREXPERIMENT=1
+      env:
+        - NAME=launchd 
+        - GO15VENDOREXPERIMENT=1
 install:
   - ./.travis/install.sh
 script: .travis/build.sh
