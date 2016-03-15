@@ -51,7 +51,7 @@ func (s systemctl) parseStatus(sData string, err error) (Status, error) {
 		} else if strings.HasPrefix(line, "Main PID") {
 			pid := line[10:len(line)]
 			idx := strings.Index(pid, " ")
-			pid = pid[0 : idx-1]
+			pid = pid[0:idx]
 			st.PID, _ = strconv.Atoi(pid)
 		}
 	}
