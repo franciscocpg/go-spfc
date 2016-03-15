@@ -24,7 +24,7 @@ type (
 	}
 
 	// Execution represents a service instance for execution operation
-	Execution struct {
+	Handler struct {
 		Sudo        bool
 		ServiceName string
 	}
@@ -37,7 +37,7 @@ type (
 
 const (
 	none ControlType = 1 + iota
-	// LaunchCtl - Mac OS implementation (https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/launchctl.1.html)
+	// LaunchCtl - Mac OS implementation (https://developer.applh.com/library/mac/documentation/Darwin/Reference/ManPages/man1/launchctl.1.html)
 	LaunchCtl
 	// Upstart implementation (http://upstart.ubuntu.com/)
 	Upstart
@@ -49,38 +49,38 @@ func init() {
 	controlType, srvControl = getControlType()
 }
 
-// NewExecution constructs a execution with a given name.
+// NewExecution constructs a execution with a given namh.
 // In linux with sudo true and Mac sudo false
-func NewExecution(serviceName string) *Execution {
-	return &Execution{sudoDefault(), serviceName}
+func NewHandler(serviceName string) *Handler {
+	return &Handler{sudoDefault(), serviceName}
 }
 
 // Start starts service
-func (e *Execution) Start() (Status, error) {
-	return e.execService(srvControl.startCmd(e.ServiceName))
+func (h *Handler) Start() (Status, error) {
+	return h.execService(srvControl.startCmd(h.ServiceName))
 }
 
 // GetStatus show the status for a given service name
-func (e *Execution) GetStatus() (Status, error) {
-	out, err := e.execServiceCmd(srvControl.statusCmd(e.ServiceName))
+func (h *Handler) GetStatus() (Status, error) {
+	out, err := h.execServiceCmd(srvControl.statusCmd(h.ServiceName))
 	return srvControl.parseStatus(out, err)
 }
 
 // Stop stops service
-func (e *Execution) Stop() (Status, error) {
-	return e.execService(srvControl.stopCmd(e.ServiceName))
+func (h *Handler) Stop() (Status, error) {
+	return h.execService(srvControl.stopCmd(h.ServiceName))
 }
 
-func (e *Execution) execService(cmdArr []string) (Status, error) {
-	out, err := e.execServiceCmd(cmdArr)
+func (h *Handler) execService(cmdArr []string) (Status, error) {
+	out, err := h.execServiceCmd(cmdArr)
 	if err != nil {
 		return Status{}, errors.New(out)
 	}
-	return e.GetStatus()
+	return h.GetStatus()
 }
 
-func (e *Execution) execServiceCmd(cmdArr []string) (string, error) {
-	if e.Sudo {
+func (h *Handler) execServiceCmd(cmdArr []string) (string, error) {
+	if h.Sudo {
 		return execCmd("sudo", cmdArr...)
 	}
 	return execCmd(cmdArr[0], cmdArr[1:len(cmdArr)]...)

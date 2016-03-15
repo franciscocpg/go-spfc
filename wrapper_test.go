@@ -12,8 +12,8 @@ import (
 const servNameTest = "go-spfc-test"
 
 var (
-	someServiceThatNotExists *Execution
-	someServiceThatExists    *Execution
+	someServiceThatNotExists *Handler
+	someServiceThatExists    *Handler
 	sudo                     bool
 )
 
@@ -26,8 +26,8 @@ func init() {
 	}
 	fmt.Printf("As sudo? %t\n", sudo)
 	createService()
-	someServiceThatNotExists = &Execution{sudo, "someservicethatnotexists"}
-	someServiceThatExists = &Execution{sudo, servNameTest}
+	someServiceThatNotExists = &Handler{sudo, "someservicethatnotexists"}
+	someServiceThatExists = &Handler{sudo, servNameTest}
 }
 
 func TestWhenStartAServiceThatDoesNotExist_ShouldGiveAnError(t *testing.T) {
