@@ -24,7 +24,7 @@ type (
 		parseStatus(sData string, err error) (Status, error)
 	}
 
-	// Execution represents a service instance for execution operation
+	// Handler represents a service instance for execution operation
 	Handler struct {
 		Sudo        bool
 		ServiceName string
@@ -61,7 +61,7 @@ func (h *Handler) Start() (Status, error) {
 	return h.execService(srvControl.startCmd(h.ServiceName))
 }
 
-// Start starts a service and wait it starts
+// StartAndWait starts a service and wait it starts
 func (h *Handler) StartAndWait(timeout time.Duration) (Status, error) {
 	_, err := h.Start()
 	if err != nil {
@@ -81,7 +81,7 @@ func (h *Handler) Stop() (Status, error) {
 	return h.execService(srvControl.stopCmd(h.ServiceName))
 }
 
-// Stop stops a service and wait it stops
+// StopAndWait stops a service and wait it stops
 func (h *Handler) StopAndWait(timeout time.Duration) (Status, error) {
 	_, err := h.Stop()
 	if err != nil {
@@ -127,9 +127,8 @@ func (h *Handler) waitTimeout(running bool, timeout time.Duration) (Status, erro
 func getRunningCondition(running bool, st Status) bool {
 	if running {
 		return st.Running
-	} else {
-		return !st.Running
 	}
+	return !st.Running
 }
 
 func execCmd(cmd string, arg ...string) (string, error) {

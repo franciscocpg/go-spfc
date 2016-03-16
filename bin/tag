@@ -1,0 +1,6 @@
+#!/bin/bash
+clear
+set -e
+VERSION=$(cat glide.yaml | grep version)
+git tag ${VERSION:9}
+git push --tags
