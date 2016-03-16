@@ -29,3 +29,6 @@ matrix:
 install:
   - ./.travis/install.sh
 script: .travis/build.sh
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
