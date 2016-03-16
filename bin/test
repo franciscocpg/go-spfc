@@ -1,7 +1,8 @@
 #!/bin/bash
+SUDO="$1"
 clear
 set -e
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$SUDO" == "sudo" && "$OSTYPE" == "linux-gnu" ]]; then
 	export GO_SPFC_SUDO_TEST=true
 fi
 go test -covermode=count -coverprofile=coverage.out -v
