@@ -1,6 +1,11 @@
 #!/bin/bash
 clear
 set -e
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [[ "$BRANCH" != "master" ]]; then
+	echo "This command should be run only in master"
+	exit 1	
+fi
 VERSION=$(cat glide.yaml | grep version)
 git tag ${VERSION:9}
 git push --tags
