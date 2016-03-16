@@ -92,7 +92,7 @@ func errorHandler(err error) {
 }
 
 ```
-If someting goes wrong, the err is populate with a timeout message.
+If someting goes wrong, the *err* is populate with a timeout message.
 
 ## TODO
 - Implement the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) communication using DBUS ([go-systemd](https://github.com/coreos/go-systemd)) instead of a process call to **systemctl**.
