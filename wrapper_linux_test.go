@@ -37,5 +37,12 @@ func createService() {
 }
 
 func removeService() {
+	if controlType == Upstart {
+		someServiceThatExists.Stop()
+	}
 	execCmd("sudo", "rm", fileName)
+}
+
+func waitStop() {
+	// We dont need to. :)
 }

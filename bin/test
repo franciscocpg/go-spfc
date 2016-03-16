@@ -1,2 +1,8 @@
+#!/bin/bash
 clear
-go test -v
+set -e
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+	export GO_SPFC_SUDO_TEST=true
+fi
+go test -covermode=count -coverprofile=coverage.out -v
+go tool cover -func=coverage.out
