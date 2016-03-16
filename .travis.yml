@@ -1,5 +1,10 @@
 language: go
 
+branches:
+  only:
+    - master
+    - dev
+
 matrix:
   include:
     - sudo: required
