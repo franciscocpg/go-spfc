@@ -5,7 +5,8 @@
 **master(stable)**: [![Build Status](https://travis-ci.org/franciscocpg/go-spfc.svg?branch=master)](https://travis-ci.org/franciscocpg/go-spfc)  
 **dev**: [![Build Status](https://travis-ci.org/franciscocpg/go-spfc.svg?branch=dev)](https://travis-ci.org/franciscocpg/go-spfc)
 ### Tests coverage
-**master(stable)**: [![Coverage Status](https://coveralls.io/repos/github/franciscocpg/go-spfc/badge.svg?branch=master)](https://coveralls.io/github/franciscocpg/go-spfc?branch=master)
+**master(stable)**: [![codecov.io](https://codecov.io/github/franciscocpg/go-spfc/coverage.svg?branch=master)](https://codecov.io/github/franciscocpg/go-spfc?branch=master)  
+**dev**: [![codecov.io](https://codecov.io/github/franciscocpg/go-spfc/coverage.svg?branch=dev)](https://codecov.io/github/franciscocpg/go-spfc?branch=dev)
 
 A lib for wrapping services in Linux ([Upstart](http://upstart.ubuntu.com/) or [systemd](https://www.freedesktop.org/wiki/Software/systemd/)) and MacOS ([launchd](https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man8/launchd.8.html)).
 
