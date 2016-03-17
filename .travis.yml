@@ -11,6 +11,7 @@ matrix:
     env:
     - NAME=systemd
     - DOCKER=true
+    - secure: nQ3GzWIrVNbLp5rH6IEGYnlTcxge2FBUTESkjr4T9HYTlE9RzSsOz+GOa1ph5ik3xtBNrYvTjirx2Wu8bp7pGCCY6dqQ2N+6o/k6pzRAvp2uKJUwcdawjyV9R+HkqR+DJkjDiEtiFEKPBSQQVhtlNL66KtmTaq0akTfQLKMKIEBtHjCsnyWV0tpZSMsdwE4kyvDyxlVfOBXOcWJ1owVl529tBQG7+asBHe1EiuclKqfDpWvzrtwv96qMEObxyxykjlO+6GiLN44KJIZuKTIuRBmfUdBBc7ZcrzE4Q+Nq5fA3c0G5c+4CcJTMPwTTgXx4HcEOuecpzMqcaMu0jl9fn/fKSCgJ2BZa0SlJi1OiLH6IA/6aJHaxpOF+vo+O2kgtaNl+lTAtL/lJG60pERlWO7lQj1GMPkHeuCz9XhdVcfHTWofMADTlL1DkpW78LIFIqEpQeq+xFiWj16FWhEdYyuyyFC9CzIfdw5mzK1LSqvAuNSF/L+Cy/nArsq83QhdWn/HmlBU201RXoizHyDOUgsFTabPd/tM3I72oV6JYjrnG/nvohRv0WHY1vK+xLhLmisbUqH1QU9mVTxS4o4yh+FoSizYJcWjB6yJzpyWAXRDucz5hsbqvjsy/E0lKDr+LxLDCz70MJ1Mz2zGzxum50QSrYXMpd1E2YeA/JJxxaQM=
   - os: linux
     dist: trusty
     sudo: required
@@ -29,6 +30,3 @@ install:
 script: .travis/build.sh
 after_success:
 - ./.travis/after_success.sh
-env:
-  matrix:
-    secure: nQ3GzWIrVNbLp5rH6IEGYnlTcxge2FBUTESkjr4T9HYTlE9RzSsOz+GOa1ph5ik3xtBNrYvTjirx2Wu8bp7pGCCY6dqQ2N+6o/k6pzRAvp2uKJUwcdawjyV9R+HkqR+DJkjDiEtiFEKPBSQQVhtlNL66KtmTaq0akTfQLKMKIEBtHjCsnyWV0tpZSMsdwE4kyvDyxlVfOBXOcWJ1owVl529tBQG7+asBHe1EiuclKqfDpWvzrtwv96qMEObxyxykjlO+6GiLN44KJIZuKTIuRBmfUdBBc7ZcrzE4Q+Nq5fA3c0G5c+4CcJTMPwTTgXx4HcEOuecpzMqcaMu0jl9fn/fKSCgJ2BZa0SlJi1OiLH6IA/6aJHaxpOF+vo+O2kgtaNl+lTAtL/lJG60pERlWO7lQj1GMPkHeuCz9XhdVcfHTWofMADTlL1DkpW78LIFIqEpQeq+xFiWj16FWhEdYyuyyFC9CzIfdw5mzK1LSqvAuNSF/L+Cy/nArsq83QhdWn/HmlBU201RXoizHyDOUgsFTabPd/tM3I72oV6JYjrnG/nvohRv0WHY1vK+xLhLmisbUqH1QU9mVTxS4o4yh+FoSizYJcWjB6yJzpyWAXRDucz5hsbqvjsy/E0lKDr+LxLDCz70MJ1Mz2zGzxum50QSrYXMpd1E2YeA/JJxxaQM=

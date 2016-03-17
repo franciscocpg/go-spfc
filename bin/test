@@ -20,8 +20,8 @@ COVERAGE_FILE=${COVERAGE_FILE// /-}
 if [[ "$SUDO" == "sudo" && "$(uname)" == "Linux" ]]; then
 	export GO_SPFC_SUDO_TEST=true
 fi
+go test -covermode=count -coverprofile="$COVERAGE_FILE" -v
 if [[ "$(uname)" == "Linux" ]]; then
-	go test -covermode=count -coverprofile="$COVERAGE_FILE" -v
 	# These files won't be coveraged any way
 	if [[ "$OS_NAME" == "CentOS Linux" ]]; then
 		rmFile="initctl_linux.go"
