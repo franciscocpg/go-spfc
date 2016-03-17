@@ -6,7 +6,7 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
 fi
 if [[ "$DOCKER" = "true" ]]; then
 	PROJECT="/root/go/src/github.com/franciscocpg/go-spfc"
-	docker exec go-systemd-test bash -l -c 'cd '$PROJECT'; bash <(curl -s https://codecov.io/bash) -f $(cat coverage-filename)'
+	docker exec go-systemd-test bash -l -c 'cd '$PROJECT'; bash <(curl -s https://codecov.io/bash) -f $(cat coverage-filename) -t '$CODECOV_TOKEN''
 else
 	bash <(curl -s https://codecov.io/bash) -f $(cat coverage-filename)
 fi
