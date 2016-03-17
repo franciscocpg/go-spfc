@@ -56,7 +56,7 @@ Running: false, st.PID: 0
 ```
 
 ### Wait service to start or stop
-Specially when you are using a Mac the previous code can result something like this.
+Especially when you are using a Mac the previous code can result something like this.
 **result**
 ```
 Running: false, st.PID: 0
