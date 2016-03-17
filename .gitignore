@@ -27,4 +27,4 @@ _projects
 glide.lock
 vendor/
 
-coverage.*
+coverage*

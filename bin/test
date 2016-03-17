@@ -2,8 +2,43 @@
 SUDO="$1"
 clear
 set -e
-if [[ "$SUDO" == "sudo" && "$OSTYPE" == "linux-gnu" ]]; then
+
+initOSName() {
+	if [[ "$(uname)" == "Linux" ]]; then
+		OS_NAME=$(cat /etc/os-release | grep ^NAME)
+		OS_NAME=${OS_NAME//\"/}
+		OS_NAME=${OS_NAME:5}
+	else
+		OS_NAME="$(uname)"
+	fi
+}
+
+initOSName
+COVERAGE_FILE="coverage-$OS_NAME.out"
+COVERAGE_FILE=${COVERAGE_FILE// /-}
+
+if [[ "$SUDO" == "sudo" && "$(uname)" == "Linux" ]]; then
 	export GO_SPFC_SUDO_TEST=true
 fi
-go test -covermode=count -coverprofile=coverage.out -v
-go tool cover -func=coverage.out
+if [[ "$(uname)" == "Linux" ]]; then
+	go test -covermode=count -coverprofile="$COVERAGE_FILE" -v
+	# These files won't be coveraged any way
+	if [[ "$OS_NAME" == "CentOS Linux" ]]; then
+		rmFile="initctl_linux.go"
+	else
+		rmFile="systemctl_linux.go"
+	fi
+	firstLine="true"
+	while read -r line
+	do
+		if [[ "$firstLine" == "true" ]]; then
+			buffer="$line"
+			firstLine="false"
+		elif [[ "$line" != *"$rmFile"* ]]; then
+			buffer="$buffer\n$line"
+		fi
+	done < "$COVERAGE_FILE"
+	echo -e "$buffer" > "$COVERAGE_FILE"
+	echo "$COVERAGE_FILE" > "coverage-filename"
+fi
+go tool cover -func="$COVERAGE_FILE"

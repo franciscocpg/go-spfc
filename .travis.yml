@@ -31,4 +31,4 @@ install:
 script: .travis/build.sh
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - ./.travis/after_success.sh
