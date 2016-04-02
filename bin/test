@@ -1,2 +1,6 @@
+#!/bin/bash
 clear
+if [[ -f /etc/debian_version ]]; then
+	export GO_SPFC_SUDO_TEST=true
+fi
 go test -v
