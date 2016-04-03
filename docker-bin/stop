@@ -1,0 +1,2 @@
+clear
+docker stop go-systemd-test

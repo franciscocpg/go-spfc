@@ -1,0 +1,4 @@
+#!/bin/bash
+clear
+PROJECT="/root/go/src/github.com/franciscocpg/go-spfc"
+docker exec go-systemd-test bash -l -c 'cd '$PROJECT'; bin/test'
