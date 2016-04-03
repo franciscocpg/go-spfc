@@ -1,0 +1,2 @@
+clear
+docker run -itd --name go-systemd-test -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp//tmp/tmp.KWSftfe9T3:/run go-systemd

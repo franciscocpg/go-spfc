@@ -1,0 +1,2 @@
+clear
+docker rm -f go-systemd-test

@@ -44,8 +44,11 @@ func createService() {
 
 func removeService() {
 	execLaunchctl("remove", servNameTest)
+}
+
+func waitStop() {
 	// Wait a little bit
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(2 * time.Second)
 }
 
 func execLaunchctl(arg ...string) {
