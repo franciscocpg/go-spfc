@@ -2,7 +2,7 @@
 ### Doc
 [![GoDoc](https://godoc.org/github.com/franciscocpg/go-spfc?status.svg)](https://godoc.org/github.com/franciscocpg/go-spfc)
 ## Build
-### Master
+### master
 [![Build Status](https://travis-ci.org/franciscocpg/go-spfc.svg?branch=master)](https://travis-ci.org/franciscocpg/go-spfc) [![codecov.io](https://codecov.io/github/franciscocpg/go-spfc/coverage.svg?branch=master)](https://codecov.io/github/franciscocpg/go-spfc?branch=master)
 ### dev
 [![Build Status](https://travis-ci.org/franciscocpg/go-spfc.svg?branch=dev)](https://travis-ci.org/franciscocpg/go-spfc)
