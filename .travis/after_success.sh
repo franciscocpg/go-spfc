@@ -9,8 +9,5 @@ if [[ "$DOCKER" = "true" ]]; then
 	BRANCH=$TRAVIS_BRANCH
 	docker exec go-systemd-test bash -l -c 'cd '$PROJECT'; bash <(curl -s https://codecov.io/bash) -f $(cat coverage-filename) -t '$CODECOV_TOKEN' -B '$BRANCH''
 else
-	pwd
-	ls -l 
-	echo "TRAVIS_OS_NAME: $TRAVIS_OS_NAME"
 	bash <(curl -s https://codecov.io/bash) -f $(cat coverage-filename)
 fi

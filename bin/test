@@ -39,6 +39,6 @@ if [[ "$(uname)" == "Linux" ]]; then
 		fi
 	done < "$COVERAGE_FILE"
 	echo -e "$buffer" > "$COVERAGE_FILE"
-	echo "$COVERAGE_FILE" > "coverage-filename"
 fi
+echo "$COVERAGE_FILE" > "coverage-filename"
 go tool cover -func="$COVERAGE_FILE"
