@@ -2,7 +2,7 @@
 ### Doc
 [![GoDoc](https://godoc.org/github.com/franciscocpg/go-spfc?status.svg)](https://godoc.org/github.com/franciscocpg/go-spfc)
 ## Build
-### Master
+### master
 [![Build Status](https://travis-ci.org/franciscocpg/go-spfc.svg?branch=master)](https://travis-ci.org/franciscocpg/go-spfc) [![codecov.io](https://codecov.io/github/franciscocpg/go-spfc/coverage.svg?branch=master)](https://codecov.io/github/franciscocpg/go-spfc?branch=master)
 ### dev
 [![Build Status](https://travis-ci.org/franciscocpg/go-spfc.svg?branch=dev)](https://travis-ci.org/franciscocpg/go-spfc)
@@ -56,20 +56,19 @@ Running: false, st.PID: 0
 ```
 
 ### Wait service to start or stop
-Especially when you are using a Mac the previous code can result something like this.
-**result**
+Especially when you are using a Mac the previous code can result something like this
 ```
 Running: false, st.PID: 0
 Running: false, st.PID: 0
 Running: false, st.PID: 0
 ```
 What happens? The problem is that [launchd](https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man8/launchd.8.html) runs commands in a asynchronous way, so when we get the status, the service was not started (or stopped) yet.
-To workaround this problem just wait the service start or stop this way
+To workaround this just wait the service start or stop this way
 ```
 package main
 
 import (
-	"fmt"
+	"fmt"t
 	"github.com/franciscocpg/go-spfc"
 	"time"
 )
