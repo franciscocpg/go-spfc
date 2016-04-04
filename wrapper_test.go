@@ -22,7 +22,7 @@ var (
 
 func init() {
 	timeout = 5 * time.Second
-	forceTimeout = 1 * time.Millisecond
+	forceTimeout = 1 * time.Nanosecond
 	sudoEnv := os.Getenv("GO_SPFC_SUDO_TEST")
 	if len(sudoEnv) == 0 {
 		sudo = false
@@ -108,7 +108,7 @@ func TestWhenStartAndWaitAServiceThatDoesExistButTimeout_ShouldGiveAnError(t *te
 	createService()
 	_, err := someServiceThatExists.StartAndWait(forceTimeout)
 	assert.NotNil(t, err, "Should give an error")
-	assert.EqualError(t, err, "timeout after 1ms")
+	assert.EqualError(t, err, "timeout after 1ns")
 }
 
 func TestWhenStopAndWaitAServiceThatDoesExist_ShoudWorkFine(t *testing.T) {
@@ -132,5 +132,5 @@ func TestWhenStopAndWaitAServiceThatDoesExistButTimeout_ShouldGiveAnError(t *tes
 	}
 	_, err = someServiceThatExists.StopAndWait(forceTimeout)
 	assert.NotNil(t, err, "Should give an error")
-	assert.EqualError(t, err, "timeout after 1ms")
+	assert.EqualError(t, err, "timeout after 1ns")
 }
